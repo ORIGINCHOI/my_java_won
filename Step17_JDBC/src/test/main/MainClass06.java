@@ -1,9 +1,9 @@
 package test.main;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import test.util.DBConnect;
 
 /*
  *  JDBC( Java DataBase Connectivity )
@@ -15,30 +15,18 @@ import java.sql.ResultSet;
  */
 public class MainClass06 {
 	public static void main(String[] args) {
-		  //DB 연결객체를 담을 지역 변수 만들기
-	      Connection conn=null;
-	      
-	      try {
-	         //오라클 드라이버 로딩
-	         Class.forName("oracle.jdbc.driver.OracleDriver");
-	         //접속할 DB 의 정보 @아이피주소:port번호:db이름
-	         String url="jdbc:oracle:thin:@localhost:1521:xe";
-	         //계정 비밀번호를 이용해서 Connection 객체의 참조값 얻어오기
-	         conn=DriverManager.getConnection(url, "scott", "tiger");
-	         //예외가 발생하지 않고 여기까지 실행순서가 내려오면 접속 성공이다.
-	         System.out.println("Oracle DB 접속 성공");
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      }
-	      
+
 	      //시퀀스(member_seq)를 이용해서 회원정보 추가
 	      String name="김구라";
 	      String addr="노량진";
 	      
 	      //INSERT 작업을 위해서 필요한 객체의 참조값을 담을 지역 변수 미리 만들기
+	      Connection conn=null;
 	      PreparedStatement pstmt=null;
 	      try {
-	    	  //실행할 sql 문
+	    	  //Connection 객체의 참조값 얻어오기
+	    	  conn=new DBConnect().getConn();
+	    	  //실행할 미완성의 sql 문
 	    	  String sql="INSERT INTO member"
 	    			  + " (num, name, addr)"
 	    			  + " VALUES(member_seq.NEXTVAL, ?, ?)";
@@ -51,8 +39,12 @@ public class MainClass06 {
 	    	  System.out.println("회원 정보를 저장했습니다.");
 	      }catch(Exception e) {
 	    	  e.printStackTrace();
+	      }finally {
+	    	  try {
+	    		  if(pstmt!=null)pstmt.close();
+	    		  if(conn!=null)conn.close();
+	    	  }catch(Exception e) {}
 	      }
 	      
 	}
 }
-;
