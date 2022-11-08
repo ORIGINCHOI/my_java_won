@@ -36,7 +36,7 @@ public class MemberDao {
          pstmt.setString(1, dto.getName());
          pstmt.setString(2, dto.getAddr());
          //sql 문 실행하고 변화된(추가,수정,삭제) row 의 갯수를 리턴받기 
-           rowCount=pstmt.executeUpdate();
+         rowCount=pstmt.executeUpdate();
       }catch(Exception e) {
          e.printStackTrace();
       }finally {
@@ -73,7 +73,7 @@ public class MemberDao {
          pstmt.setString(2, dto.getAddr());
          pstmt.setInt(3, dto.getNum());
          //sql 문 실행하고 변화된(추가,수정,삭제) row 의 갯수를 리턴받기 
-           rowCount=pstmt.executeUpdate();
+         rowCount=pstmt.executeUpdate();
       }catch(Exception e) {
          e.printStackTrace();
       }finally {
@@ -107,7 +107,7 @@ public class MemberDao {
          // ? 에 값 바인딩하기 
          pstmt.setInt(1, num);
          //sql 문 실행하고 변화된(추가,수정,삭제) row 의 갯수를 리턴받기 
-           rowCount=pstmt.executeUpdate();
+         rowCount=pstmt.executeUpdate();
       }catch(Exception e) {
          e.printStackTrace();
       }finally {
